@@ -16,10 +16,14 @@ import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
+import { useRouter } from "next/navigation";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   return (
     <div className="flex h-full items-center justify-center p-4">
@@ -75,7 +79,14 @@ export default function Login() {
               disabled={loading}
               onClick={async () => {
                 setLoading(true);
-                await authClient.signIn.email({ email, password });
+                await authClient.signIn.email(
+                  { email, password },
+                  {
+                    onSuccess: () => {
+                      router.push("/");
+                    },
+                  },
+                );
                 setLoading(false);
               }}
             >

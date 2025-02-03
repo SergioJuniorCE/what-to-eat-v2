@@ -185,6 +185,16 @@ export default function SignUp() {
                 "Create an account"
               )}
             </Button>
+
+            <Button
+              className="w-full"
+              variant="secondary"
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              Already have an account? Login
+            </Button>
           </div>
         </CardContent>
         <CardFooter>
