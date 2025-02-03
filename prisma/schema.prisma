@@ -20,6 +20,10 @@ model Food {
   isTakeout   Boolean?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("food")
 }
 
 model User {
@@ -32,6 +36,7 @@ model User {
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+  Food          Food[]
 
   @@unique([email])
   @@map("user")

@@ -1,4 +1,6 @@
-import { Calendar, Heart, Home, Search, Settings } from "lucide-react";
+"use client";
+
+import { Ham, Heart, Home, LucideProps, Settings } from "lucide-react";
 
 import {
   Sidebar,
@@ -10,9 +12,17 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { authClient } from "@/lib/auth-client";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
 
 // Menu items.
-const items = [
+const items: {
+  title: string;
+  url: string;
+  icon?: ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+  >;
+}[] = [
   {
     title: "Home",
     url: "/",
@@ -24,14 +34,9 @@ const items = [
     icon: Heart,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
+    title: "Foods",
+    url: "/foods",
+    icon: Ham,
   },
   {
     title: "Settings",
@@ -41,6 +46,15 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const session = authClient.useSession();
+
+  if (!session) {
+    items.push(
+      { title: "Login", url: "/login" },
+      { title: "Register", url: "/register" },
+    );
+  }
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -52,7 +66,8 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
-                      <item.icon />
+                      {item.icon && <item.icon />}
+
                       <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>

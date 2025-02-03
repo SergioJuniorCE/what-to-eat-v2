@@ -2,15 +2,11 @@ import React, { type ReactNode } from "react";
 import { AppSidebar } from "./sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
-export default async function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="w-screen">
+      <main className="ml-3 w-screen">
         <SidebarTrigger />
         {children}
       </main>
