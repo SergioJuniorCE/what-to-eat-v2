@@ -1,22 +1,32 @@
-import { CreateFoodDialog } from "@/components/food/create-food-dialog";
-import { FoodCard } from "@/components/food/food-card";
-import { getCurrentUser } from "@/lib/auth";
-import { db } from "@/server/db";
+"use client";
+
 import { isEmpty } from "lodash";
 
-export default async function FoodsPage() {
-  const user = await getCurrentUser();
+import { CreateFoodDialog } from "@/components/food/create-food-dialog";
+import { FoodCard } from "@/components/food/food-card";
+import { authClient } from "@/lib/auth-client";
+import { useFood } from "@/providers/food-provider";
 
-  const foods = await (() => {
-    if (!user) return [];
-    return db.food.findMany({ where: { userId: user.id } });
-  })();
+export default function FoodsPage() {
+  const { data, error, isPending } = authClient.useSession();
+
+  const { foods } = useFood();
+
+  const user = data?.user;
+
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error.message}</div>;
+  }
 
   return (
     <div>
       <h1>Foods</h1>
       <div className="flex gap-3">
-        <CreateFoodDialog />
+        {user && <CreateFoodDialog userId={user.id} />}
         <p>Find your favorite foods here.</p>
       </div>
       {!isEmpty(foods) ? (

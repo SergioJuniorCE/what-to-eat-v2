@@ -1,6 +1,7 @@
 "use client";
 
-import { Ham, Heart, Home, LucideProps, Settings } from "lucide-react";
+import { Ham, Heart, Home, type LucideProps, Settings } from "lucide-react";
+import { type ForwardRefExoticComponent, type RefAttributes } from "react";
 
 import {
   Sidebar,
@@ -13,7 +14,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
-import { ForwardRefExoticComponent, RefAttributes } from "react";
 
 // Menu items.
 const items: {
