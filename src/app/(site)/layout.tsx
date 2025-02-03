@@ -1,7 +1,14 @@
 import React, { type ReactNode } from "react";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const session = await authClient.getSession();
+
   return (
     <>
       <header>
@@ -11,8 +18,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Link href="/about">About</Link>
           </div>
           <div className="flex gap-4">
-            <Link href="/login">Login</Link>
-            <Link href="/register">Register</Link>
+            {session ? (
+              <Link href="/dashboard">Dashboard</Link>
+            ) : (
+              <>
+                <Link href="/login">Login</Link>
+                <Link href="/register">Register</Link>
+              </>
+            )}
           </div>
         </nav>
       </header>
