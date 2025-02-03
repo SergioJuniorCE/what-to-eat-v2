@@ -1,22 +1,22 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
   CardDescription,
   CardFooter,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
-import Link from "next/link";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-
-import { useRouter } from "next/navigation";
+import { Label } from "@/components/ui/label";
+import { authClient } from "@/lib/auth-client";
 
 export default function Login() {
   const [email, setEmail] = useState("");

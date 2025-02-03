@@ -1,5 +1,9 @@
 "use client";
 
+import type { Food } from "@prisma/client";
+import type { User } from "better-auth";
+import { Edit } from "lucide-react";
+
 import {
   Dialog,
   DialogContent,
@@ -8,10 +12,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { Edit } from "lucide-react";
+
 import { Button, buttonVariants } from "../ui/button";
-import type { Food } from "@prisma/client";
-import type { User } from "better-auth";
 
 type EditFoodDialogProps = {
   food: Food;

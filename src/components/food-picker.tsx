@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { ThumbsDown,ThumbsUp } from "lucide-react";
 import Image from "next/image";
-import { ThumbsUp, ThumbsDown } from "lucide-react";
+import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 

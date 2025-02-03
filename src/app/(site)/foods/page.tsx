@@ -30,7 +30,7 @@ export default function FoodsPage() {
         <p>Find your favorite foods here.</p>
       </div>
       {!isEmpty(foods) ? (
-        <div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {foods.map((food) => (
             <FoodCard key={food.id} food={food} user={user} />
           ))}

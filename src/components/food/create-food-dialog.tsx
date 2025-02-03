@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type Food } from "@prisma/client";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -25,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { useFood } from "@/providers/food-provider";
 import { createFood } from "@/server/foodActions";
+import { UploadButton } from "@/utils/uploadthing";
 
 import { Checkbox } from "../ui/checkbox";
 
@@ -37,11 +39,14 @@ const formSchema = z.object({
   description: z.string().optional(),
   recipe: z.string().optional(),
   isTakeout: z.boolean().optional(),
+  image: z.string().nullable(),
   userId: z.string().nonempty(),
 });
 
 export const CreateFoodDialog = ({ userId }: CreateFoodDialogProps) => {
   const { addFood } = useFood();
+
+  const [foodImage, setFoodImage] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,6 +55,7 @@ export const CreateFoodDialog = ({ userId }: CreateFoodDialogProps) => {
       description: "",
       recipe: "",
       isTakeout: false,
+      image: foodImage,
       userId,
     },
   });
@@ -133,6 +139,25 @@ export const CreateFoodDialog = ({ userId }: CreateFoodDialogProps) => {
                   </FormControl>
                 </FormItem>
               )}
+            />
+            <UploadButton
+              endpoint="imageUploader"
+              onClientUploadComplete={(res) => {
+                if (!res || res.length === 0) {
+                  toast({
+                    title: "No image uploaded",
+                    description: "Please upload an image.",
+                    variant: "destructive",
+                  });
+                  return;
+                }
+                const imageUrl = res[0]!.url;
+                setFoodImage(imageUrl);
+              }}
+              onUploadError={(error: Error) => {
+                // Do something with the error.
+                alert(`ERROR! ${error.message}`);
+              }}
             />
             <Button type="submit">Submit</Button>
           </form>

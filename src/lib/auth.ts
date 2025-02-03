@@ -1,7 +1,8 @@
+import { PrismaClient } from "@prisma/client";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { PrismaClient } from "@prisma/client";
 import { admin } from "better-auth/plugins";
+import { type ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
 import { headers } from "next/headers";
 
 const prisma = new PrismaClient();
@@ -19,7 +20,12 @@ export const auth = betterAuth({
   },
 });
 
-export const getCurrentUser = async () => {
-  const session = await auth.api.getSession({ headers: await headers() });
+export const getCurrentUser = async (incomingHeaders?: ReadonlyHeaders) => {
+  const reqHeaders = await (() => {
+    if (incomingHeaders) return incomingHeaders;
+
+    return headers();
+  })();
+  const session = await auth.api.getSession({ headers: reqHeaders });
   return session?.user;
 };

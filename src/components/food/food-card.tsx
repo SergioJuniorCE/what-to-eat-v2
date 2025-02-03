@@ -1,4 +1,6 @@
 import type { Food } from "@prisma/client";
+import type { User } from "better-auth";
+
 import {
   Card,
   CardContent,
@@ -8,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import type { User } from "better-auth";
+
 import { EditFoodDialog } from "./edit-food-dialog";
 
 type FoodCardProps = {
