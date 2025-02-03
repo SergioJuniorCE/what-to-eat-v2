@@ -4,7 +4,7 @@ const config = {
   parserOptions: {
     project: true,
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "simple-import-sort"],
   extends: [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended-type-checked",
@@ -36,6 +36,8 @@ const config = {
       },
     ],
     "@typescript-eslint/no-unsafe-call": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
   },
 };
 module.exports = config;
