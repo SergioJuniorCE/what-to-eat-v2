@@ -1,8 +1,8 @@
-import React, { type ReactNode } from "react";
-import { AppSidebar } from "./sidebar";
+import { type ReactNode } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "./sidebar";
 
-export default async function RootLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: ReactNode;
@@ -10,7 +10,7 @@ export default async function RootLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="w-screen">
+      <main>
         <SidebarTrigger />
         {children}
       </main>
